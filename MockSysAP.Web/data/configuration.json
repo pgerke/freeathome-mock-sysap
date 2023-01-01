@@ -1,0 +1,34 @@
+{
+  "00000000-0000-0000-0000-000000000000": {
+    "connectionState": "online",
+    "sysapName": "Mock System Access Point",
+    "devices": {
+      "ABB700000000": {
+        "interface": "sysap",
+        "displayName": "Device",
+        "unresponsive": false,
+        "channels": {
+          "ch0000": {
+            "displayName": "Device",
+            "functionID": "25",
+            "inputs": {
+              "idp0000": {
+                "pairingID": 20,
+                "value": "0"
+              }
+            },
+            "outputs": {
+              "odp0000": {
+                "pairingID": 18,
+                "value": "1"
+              }
+            }
+          }
+        }
+      }
+    },
+    "device_copies": {},
+    "floorplan": {},
+    "users": {}
+  }
+}

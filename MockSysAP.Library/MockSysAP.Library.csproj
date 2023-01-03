@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>PhilipGerke.FreeAtHome.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>PhilipGerke.FreeAtHome.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>free@home Mock System Access Point Libary</Title>
+    <Authors>Philip Gerke</Authors>
+    <Company>Ingenieurbüro Philip Gerke</Company>
+    <Product>free@home Mock System Access Point</Product>
+    <RepositoryUrl>https://github.com/pgerke/freeathome-mock-sysap</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+</Project>

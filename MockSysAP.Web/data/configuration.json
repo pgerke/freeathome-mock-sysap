@@ -28,7 +28,18 @@
       }
     },
     "device_copies": {},
-    "floorplan": {},
+    "floorplan": {
+      "floors": {
+        "01": {
+          "name": "Default Floor",
+          "rooms": {
+            "01": {
+              "name": "Default Room"
+            }
+          }
+        }
+      }
+    },
     "users": {}
   }
 }

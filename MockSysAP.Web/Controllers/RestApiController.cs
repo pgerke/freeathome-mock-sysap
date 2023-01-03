@@ -1,38 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.IO;
+using PhilipGerke.FreeAtHome.MockSysAP.Library.Interfaces;
+using PhilipGerke.FreeAtHome.MockSysAP.Library.Models;
+using PhilipGerke.FreeAtHome.MockSysAP.Web.Services;
 using System.Net.Mime;
-using System.Text.Json;
 
-namespace MockSysAP.Web.Controllers
+namespace PhilipGerke.FreeAtHome.MockSysAP.Web.Controllers
 {
+    /// <summary>
+    /// The controller for the REST API.
+    /// </summary>
     [ApiController]
     [Route("fhapi/v1/api/rest")]
     public sealed class RestApiController : Controller
     {
-        private readonly ILogger logger;
-        private readonly object? configuration;
+        private readonly ISystemAccessPointService<SystemAccessPoint> sysApService;
 
-        public RestApiController(ILogger<RestApiController> logger)
-        {
-            this.logger = logger;
-            logger.Log(LogLevel.Debug, Directory.GetCurrentDirectory());
-
-            using(StreamReader stream = System.IO.File
-                .OpenText(Path.Join(Directory.GetCurrentDirectory(), "data", "configuration.json")))
-            {
-                configuration = JsonSerializer.Deserialize(stream.ReadToEnd(), typeof(object));
-            }
-        }
-
+        /// <summary>
+        /// Constructs a new <see cref="RestApiController"/> instance injecting the specified services.
+        /// </summary>
+        /// <param name="sysApService">The System Access Point service instance.</param>
+        public RestApiController(ISystemAccessPointService<SystemAccessPoint> sysApService)
+        { this.sysApService = sysApService; }
 
         /// <summary>
         /// Get the System Access Point configuration.
         /// </summary>
         [HttpGet("configuration")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(SystemAccessPoint), 200)]
         [ProducesResponseType(401)]
-        public IActionResult GetConfiguration() { return Json(configuration); }
+        public IActionResult GetConfiguration() { return new JsonResult(sysApService.Configuration); }
 
         /// <summary>
         /// Get the device list.
@@ -42,22 +39,38 @@ namespace MockSysAP.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult GetDeviceList() { return Ok("Get Device List"); }
+        public IActionResult GetDeviceList() { return new JsonResult(sysApService.DeviceList); }
 
+        /// <summary>
+        /// Gets the specified device.
+        /// </summary>
+        /// <param name="sysAp">The System Access Point identifier.</param>
+        /// <param name="device">The device serial.</param>
         [HttpGet("device/{sysAp}/{device}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult GetDevice([FromRoute] string sysAp, [FromRoute] string device)
-        { return Ok($"Get Device: SysAP '{sysAp}', Device Serial '{device}'"); }
+        public IActionResult GetDevice([FromRoute] Guid sysAp, [FromRoute] string device)
+        {
+            IDevice? resolvedDevice = sysApService.GetDevice(sysAp, device);
+            return (resolvedDevice == null) ? NotFound() : (new JsonResult(resolvedDevice));
+        }
 
+        /// <summary>
+        /// Gets the device datapoint.
+        /// </summary>
+        /// <param name="sysAp">The System Access Point identifier.</param>
+        /// <param name="device">The device serial.</param>
+        /// <param name="channel">The device channel</param>
+        /// <param name="datapoint">The data point.</param>
+        /// <returns></returns>
         [HttpGet("datapoint/{sysAp}/{device}/{channel}/{datapoint}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult GetDatapointValue(
+        public IActionResult GetDataPointValue(
             [FromRoute] string sysAp,
             [FromRoute] string device,
             [FromRoute] string channel,
@@ -74,7 +87,7 @@ namespace MockSysAP.Web.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(502)]
-        public IActionResult SetDatapointValue(
+        public IActionResult SetDataPointValue(
             [FromRoute] string sysAp,
             [FromRoute] string device,
             [FromRoute] string channel,

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockSysAP.Web", "MockSysAP.Web\MockSysAP.Web.csproj", "{FC5B48DA-3F3B-4D12-907D-A27671BDDCE0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EEEEFC04-9AFF-4486-939A-687A56D51BB7} = {EEEEFC04-9AFF-4486-939A-687A56D51BB7}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD5688BE-B8D4-4905-8AB7-DF9E1003A586}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockSysAP.Library", "MockSysAP.Library\MockSysAP.Library.csproj", "{EEEEFC04-9AFF-4486-939A-687A56D51BB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +27,10 @@ Global
 		{FC5B48DA-3F3B-4D12-907D-A27671BDDCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC5B48DA-3F3B-4D12-907D-A27671BDDCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC5B48DA-3F3B-4D12-907D-A27671BDDCE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEEEFC04-9AFF-4486-939A-687A56D51BB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEEEFC04-9AFF-4486-939A-687A56D51BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEEEFC04-9AFF-4486-939A-687A56D51BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEEEFC04-9AFF-4486-939A-687A56D51BB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
